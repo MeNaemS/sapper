@@ -35,23 +35,24 @@ class VisibleSapperField(ABCField):
 
 	def __str__(self) -> str:
 		len_size_shape_x: int = floor(log10(self._field.shape[0]))
+		len_size_shape_y: int = floor(log10(self._field.shape[1]))
 		res: str = '\t' + ' ' * (len_size_shape_x + 2) +\
-			'|'.join(f'{i}{" " * (len_size_shape_x - floor(log10(i)))}' for i in range(
+			'|'.join(f'{i}{" " * (len_size_shape_y - floor(log10(i)))}' for i in range(
 				1, self._field.shape[1] + 1)
 			) + '\n'
 		res += '\t' + ' ' * (len_size_shape_x + 2) + '|'.join(
-			' ' * (len_size_shape_x + 1) for _ in range(self._field.shape[1])
+			' ' * (len_size_shape_y + 1) for _ in range(self._field.shape[1])
 		)
 		for x in range(self._field.shape[0]):
 			res += f'\n\t{x + 1}{' ' * ((len_size_shape_x - floor(log10(x + 1))) + 1)}'
 			res += '|'.join(
-				self._field[x][y] + f'{" " * len_size_shape_x}' for y in range(
+				self._field[x][y] + f'{" " * len_size_shape_y}' for y in range(
 					self._field.shape[1]
 				)
 			)
 			if x != self._field.shape[0] - 1:
 				res += f'\n\t{"-" * (len_size_shape_x + 2)}' +\
-					'+'.join('-' * (len_size_shape_x + 1) for _ in range(self._field.shape[1]))
+					'+'.join('-' * (len_size_shape_y + 1) for _ in range(self._field.shape[1]))
 		return res
 
 	def __repr__(self) -> str:

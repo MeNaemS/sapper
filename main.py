@@ -5,8 +5,8 @@ from src.control_game.control import Control
 def run_game(hard: str, mines: str):
 	helper: list[str] = [
 		'Возможные вводы:',
-		'click x y — сделать ход в точку x, y',
-		'flag x y — поставить флаг на точку x, y',
+		'click y x — сделать ход в точку y x',
+		'flag yx — поставить флаг на точку y x',
 		'help — помощь',
 		'end game — закончить игру'
 	]
@@ -49,7 +49,8 @@ def run_game(hard: str, mines: str):
 if __name__ == '__main__':
 	run_game(
 		input(
-			'Введите сложность игры (варианты: easy, medium, hard или же в формате: x, y): '
+			'Введите сложность игры (варианты: easy, medium, hard или же в формате: '
+			'height, width): '
 		),
 		input('Введите количество мин: ')
 	)
