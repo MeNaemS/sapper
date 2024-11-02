@@ -3,6 +3,7 @@ from src.field.abstract_field import ABCField
 from src.consts import START_CHAR
 from numpy.typing import NDArray
 from numpy import byte, array
+from math import log10, floor
 
 
 class VisibleSapperField(ABCField):
@@ -33,13 +34,25 @@ class VisibleSapperField(ABCField):
 			self._field[item[0], item[1]] = value
 
 	def __str__(self) -> str:
-		res: str = ''
+		len_size_shape_x: int = floor(log10(self._field.shape[0]))
+		len_size_shape_y: int = floor(log10(self._field.shape[1]))
+		res: str = '\t' + ' ' * (len_size_shape_x + 2) +\
+			'|'.join(f'{i}{" " * (len_size_shape_y - floor(log10(i)))}' for i in range(
+				1, self._field.shape[1] + 1)
+			) + '\n'
+		res += '\t' + ' ' * (len_size_shape_x + 2) + '|'.join(
+			' ' * (len_size_shape_y + 1) for _ in range(self._field.shape[1])
+		)
 		for x in range(self._field.shape[0]):
-			res += '\t' + '|'.join(self._field[x])
-			if x != self._field.shape[0] - 1:
-				res += '\n\t{}\n'.format(
-					'+'.join(['-' for _ in range(self._field.shape[1])])
+			res += f'\n\t{x + 1}{' ' * ((len_size_shape_x - floor(log10(x + 1))) + 1)}'
+			res += '|'.join(
+				self._field[x][y] + f'{" " * len_size_shape_y}' for y in range(
+					self._field.shape[1]
 				)
+			)
+			if x != self._field.shape[0] - 1:
+				res += f'\n\t{"-" * (len_size_shape_x + 2)}' +\
+					'+'.join('-' * (len_size_shape_y + 1) for _ in range(self._field.shape[1]))
 		return res
 
 	def __repr__(self) -> str:
@@ -50,4 +63,6 @@ def create_visible_field(size: tuple[int, int]) -> VisibleSapperField:
 	"""
 		Создание видимого поля.
 	"""
-	return VisibleSapperField(array([[START_CHAR for _ in range(size[1])] for _ in range(size[0])], dtype='U'))
+	return VisibleSapperField(
+		array([[START_CHAR for _ in range(size[1])] for _ in range(size[0])], dtype='U')
+	)
