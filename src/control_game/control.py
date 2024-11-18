@@ -1,6 +1,6 @@
 from src.field.visible_field import VisibleSapperField, create_visible_field
 from src.field.hidden_field import HiddenSapperField, create_hidden_field
-from src.consts import LEVEL_OF_DIFFICULTY, START_CHAR, hidden_to_visible
+from config.load_settings import LEVEL_OF_DIFFICULTY, START_CHAR, hidden_to_visible
 from src.operations import get_mines_from_difficulty
 from numpy.typing import NDArray
 
@@ -69,10 +69,12 @@ class Control:
 		return f'\tСложность: {self.__difficulty[0]} — {self.__difficulty[1]}; ' +\
 			f'Флаги: {self.__flag}\n{str(self.__visible_field)}\n'
 
-	def touch_flag(self, coords: tuple[int, int]):
+	def touch_flag(self, coords: tuple[int, int]) -> str:
 		"""
 			Обозначение флага.
 		"""
+		if self.__hidden_field is None:
+			return 'Прежде чем поставить флаг, вам необходимо выполнить команду click.'
 		if self.__visible_field[coords[0]][coords[1]] == 'f':
 			self.__flag += 1
 			self.__hidden_field[coords[0]][coords[1]] = self.__hidden_field[coords[0]][
@@ -101,3 +103,12 @@ class Control:
 
 	def __str__(self) -> str:
 		return self.__difficulty[0] + str(self.__visible_field)
+
+
+def create_controller(
+	difficulty: str | tuple[int, int] = 'medium',
+	mines: int | None = None
+) -> Control:
+	if difficulty not in {'easy', 'medium', 'hard'} and not isinstance(difficulty, tuple):
+		raise ValueError('Недопустимые входные данные')
+	return Control(difficulty, mines)

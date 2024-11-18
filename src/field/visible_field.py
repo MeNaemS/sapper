@@ -1,6 +1,6 @@
 from src.subtypes import TypeItem, ValueType
 from src.field.abstract_field import ABCField
-from src.consts import START_CHAR
+from config.load_settings import START_CHAR
 from numpy.typing import NDArray
 from numpy import byte, array
 from math import log10, floor

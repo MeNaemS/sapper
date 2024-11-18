@@ -1,11 +1,15 @@
 from typing import Callable, Any, ParamSpec, TypeVar
-from src.consts import LEVEL_OF_DIFFICULTY
+from config.load_settings import LEVEL_OF_DIFFICULTY
 
 # Параметры функции
 _P = ParamSpec('_P')
 
 # Допустимые типы для параметров функции
 _T = TypeVar('_T')
+
+
+def str_to_tuple(text: str) -> tuple[int, int]:
+	return tuple(map(int, text[1:len(text) - 1].split(', ')))
 
 
 def func_list(func: Callable[_P, _T], lst: list[Any]) -> Any:
