@@ -1,0 +1,25 @@
+{
+    "window": {
+        "windowed": true,
+        "size": [600, 800]
+    },
+    "level_of_difficulty": {
+        "easy": [8, 10],
+        "medium": [14, 18],
+        "hard": [20, 24]
+    },
+    "background": {
+        "color": [184, 183, 181]
+    },
+    "brick": {
+        "size": {
+            "minimal": 10,
+            "maximal": 20
+        },
+        "colors": {
+            "base": [107, 114, 124],
+            "shadow": [46, 59, 67],
+            "highlight": [119, 126, 136]
+        }
+    }
+}
