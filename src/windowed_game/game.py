@@ -1,5 +1,5 @@
-from src.widgets.main_menu import MainMenu
 from PyQt6.QtWidgets import QApplication
+from src.widgets import MainMenu
 from sys import argv
 
 
