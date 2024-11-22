@@ -5,7 +5,6 @@ from src.operations import get_mines_from_difficulty
 from numpy.typing import NDArray
 
 
-
 class Control:
 	"""
 		Управление игрой.
@@ -27,6 +26,10 @@ class Control:
 		self.__flag: int = self.__mines
 		self.__hidden_field: HiddenSapperField | None = None
 		self.__visible_field: VisibleSapperField = create_visible_field(self.__difficulty[1])
+
+	@property
+	def visible_field(self) -> VisibleSapperField:
+		return self.__visible_field
 
 	def __open_field(self, coords: tuple[int, int]):
 		"""
@@ -73,6 +76,12 @@ class Control:
 		"""
 			Обозначение флага.
 		"""
+		def in_matrix(symbol: str | int, matrix: NDArray) -> bool:
+			for line in matrix:
+				if symbol in line:
+					return True
+			return False
+
 		if self.__hidden_field is None:
 			return 'Прежде чем поставить флаг, вам необходимо выполнить команду click.'
 		if self.__visible_field[coords[0]][coords[1]] == 'f':
@@ -87,6 +96,8 @@ class Control:
 				coords[1]
 			] + 9
 			self.__visible_field[coords[0]][coords[1]] = 'f'
+		if not in_matrix('x', self.__visible_field.field):
+			self.end_game(False)
 		return f'\tСложность: {self.__difficulty[0]} — {self.__difficulty[1]}; ' +\
 			f'Флаги: {self.__flag}\n{str(self.__visible_field)}\n'
 

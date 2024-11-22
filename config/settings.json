@@ -1,7 +1,10 @@
 {
+    "database": {
+        "path": ".\\config\\db\\database.db"
+    },
     "window": {
         "windowed": true,
-        "size": [600, 800]
+        "size": [500, 700]
     },
     "level_of_difficulty": {
         "easy": [8, 10],
@@ -9,7 +12,8 @@
         "hard": [20, 24]
     },
     "background": {
-        "color": [184, 183, 181]
+        "color": [184, 183, 181],
+        "path": ".\\src\\images\\background.png"
     },
     "brick": {
         "size": {
